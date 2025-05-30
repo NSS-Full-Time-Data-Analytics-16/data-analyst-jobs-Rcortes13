@@ -102,10 +102,21 @@ where title ILIKE '%analyst%';
 -------------------------------------------------------------------------------------------------------
 select title
 from data_analyst_jobs
-where title not ilike '%analyst%' AND title not ilike '%analytics%'
+where title not ilike '%analyst%' AND title not ilike '%analytics%';
 -------------------------------------------------------------------------------------------------------
 --Bonus)
 -------------------------------------------------------------------------------------------------------
+select domain, count(*)
+from(select *
+	 from data_analyst_jobs
+	 where skill ilike '%sql%'
+		and days_since_posting > 21
+		and domain is not null
+	 order by days_since_posting DESC)
+group by 1
+order by 2 DESC
+limit 4
+
 
 -------------------------------------------------------------------------------------------------------
 
