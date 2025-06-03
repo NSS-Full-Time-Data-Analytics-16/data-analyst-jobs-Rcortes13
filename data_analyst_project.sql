@@ -50,8 +50,8 @@ SELECT location AS state,
 	   round(AVG(star_rating),1) AS avg_rating
 FROM data_analyst_jobs
 WHERE star_rating IS NOT NULL
-GROUP BY 1
-ORDER BY 2 DESC;
+GROUP BY location
+ORDER BY avg_rating DESC;
 -------------------------------------------------------------------------------------------------------
 --7)SELECT unique job titles FROM the data_analyst_jobs table. How many are there? 881
 -------------------------------------------------------------------------------------------------------
@@ -71,9 +71,9 @@ WHERE location = 'CA';
 SELECT company, 
 	   round(AVG(star_rating),1) AS avg_rating
 FROM data_analyst_jobs
-WHERE star_rating IS NOT NULL
+WHERE star_rating IS NOT NULL AND company IS NOT NULL
 	AND review_COUNT > 5000
-GROUP BY 1;
+GROUP BY company;
 -------------------------------------------------------------------------------------------------------
 --10)Add the code to order the query in #9 FROM highest to lowest average star rating. 
 --Which company with more than 5000 reviews across all locations in the dataset has the highest star rating? 
@@ -93,7 +93,7 @@ ORDER BY 3 DESC, 2 DESC;
 --11)Find all the job titles that contain the word ‘Analyst’. 
 --How many different job titles are there? 1669
 -------------------------------------------------------------------------------------------------------
-SELECT title
+SELECT COUNT(DISTINCT title)
 FROM data_analyst_jobs
 WHERE title ILIKE '%analyst%';
 -------------------------------------------------------------------------------------------------------
@@ -106,7 +106,7 @@ WHERE title NOT ILIKE '%analyst%' AND title NOT ILIKE '%analytics%';
 -------------------------------------------------------------------------------------------------------
 --Bonus)
 -------------------------------------------------------------------------------------------------------
-SELECT domain, COUNT(*)
+SELECT domain AS industries, COUNT(*)
 FROM(SELECT *
 	 FROM data_analyst_jobs
 	 WHERE skill ILIKE '%sql%'
